@@ -1,0 +1,9 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+import config from "../config.json";
+
+import Hero from "../components/Hero";
+---
+
+<Layout title={config.businessName}> <Hero client:only="react" /> </Layout>
