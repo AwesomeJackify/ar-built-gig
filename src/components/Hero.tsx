@@ -18,13 +18,11 @@ const Hero = () => {
 
   const [progress, setProgress] = useState(0);
   const animationFrameId = useRef<number | null>(null);
-
   useEffect(() => {
-    console.log(heroVideo);
-    const video = document.querySelector("video");
-    video?.addEventListener("loadedmetadata", () => {
-      console.log(video?.duration);
-    });
+    const video =
+      heroVideo === project1Video
+        ? heroVideo1Ref.current
+        : heroVideo2Ref.current;
 
     const updateProgress = () => {
       if (video) {
@@ -41,9 +39,13 @@ const Hero = () => {
 
     video?.addEventListener("timeupdate", handleTimeUpdate);
 
-    video?.addEventListener("timeupdate", () => {
-      setProgress((video?.currentTime / video?.duration) * 100);
-    });
+    return () => {
+      video?.removeEventListener("timeupdate", handleTimeUpdate);
+      if (animationFrameId.current) {
+        cancelAnimationFrame(animationFrameId.current);
+        animationFrameId.current = null;
+      }
+    };
   }, [heroVideo]);
 
   const handleProgressClick = (num: number) => {
@@ -51,10 +53,12 @@ const Hero = () => {
     if (num === 1) {
       setHeroVideo(project1Video);
       if (heroVideo1Ref.current && miniVideo1Ref.current) {
+        setProgress(0);
         heroVideo1Ref.current.currentTime = 0;
         miniVideo1Ref.current.currentTime = 0;
       }
     } else if (num === 2 && heroVideo !== project2Video) {
+      setProgress(0);
       setHeroVideo(project2Video);
       if (heroVideo2Ref.current && miniVideo2Ref.current) {
         heroVideo2Ref.current.currentTime = 0;
@@ -154,7 +158,7 @@ const Hero = () => {
             ></div>
             <progress
               className="cursor-pointer progress w-full h-full bg-white/20 [&::-webkit-progress-value]:bg-white"
-              value={progress}
+              value={heroVideo == project1Video ? progress : 0}
               max="100"
             ></progress>
           </div>
@@ -166,7 +170,7 @@ const Hero = () => {
             ></div>
             <progress
               className="cursor-pointer progress w-full h-full bg-white/20 [&::-webkit-progress-value]:bg-white"
-              value={0}
+              value={heroVideo == project2Video ? progress : 0}
               max="100"
             ></progress>
           </div>
