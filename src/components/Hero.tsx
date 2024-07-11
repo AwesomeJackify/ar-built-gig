@@ -2,6 +2,7 @@ import config from "../config.json";
 import { Icon } from "@iconify-icon/react";
 
 import project1Video from "../assets/videos/project1.mp4";
+
 import { useEffect, useRef, useState } from "react";
 
 const Hero = () => {
@@ -76,7 +77,7 @@ const Hero = () => {
           <div className="absolute bottom-4 w-full flex justify-center">
             <a
               href="#"
-              className="btn flex items-center gap-1 bg-gray-200 p-4 py-3 w-fit rounded-full"
+              className="btn flex items-center gap-1 bg-gray-200 p-4 py-3 w-fit"
             >
               <Icon icon="fluent:tap-double-20-filled" className="text-2xl" />
               <h1 className="capitalize font-light text-sm">Check it out</h1>

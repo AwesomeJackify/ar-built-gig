@@ -1,9 +1,51 @@
 ---
 import Layout from "../layouts/Layout.astro";
-
 import config from "../config.json";
 
 import Hero from "../components/Hero";
+import introVideo from "../assets/videos/intro.mp4";
 ---
 
-<Layout title={config.businessName}> <Hero client:only="react" /> </Layout>
+<Layout title={config.businessName}>
+  <Hero client:load />
+  <div class="bg-accent relative">
+    <h1 class="absolute text-center top-16 w-full text-6xl">
+      My story, briefly.
+    </h1>
+    <div
+      id="videoMask"
+      class="top-0 left-0 w-full h-full"
+      style={{
+        maskImage: "radial-gradient(circle, black 20%, rgb(0, 0, 0, 0) 20%)",
+      }}
+    >
+      <video
+        id="introVideo"
+        autoplay
+        loop
+        muted
+        controls
+        class="w-full aspect-video object-cover"
+      >
+        <source src={introVideo} type="video/mp4" />
+      </video>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  import gsap from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  gsap.to("#videoMask", {
+    scrollTrigger: {
+      trigger: "#introVideo",
+      start: "10% center",
+      end: "center center",
+      scrub: true,
+    },
+    maskImage: "radial-gradient(circle, black 100%, rgb(0, 0, 0, 0) 100%)",
+  });
+</script>
