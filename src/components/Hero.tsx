@@ -36,29 +36,51 @@ const Hero = () => {
   }, [heroVideo]);
 
   return (
-    <div className="flex h-screen w-full relative">
-      <div className="flex flex-1">
-        <div className="flex flex-col w-5/6">
-          <h1>{config.businessName}</h1>
-          <p className="whitespace-pre-line">{config.heroText}</p>
+    <div className="flex w-full relative bg-secondary">
+      <div className="flex flex-1 p-8">
+        <div className="flex flex-col w-5/6 gap-8">
+          <h1 className="text-8xl font-extrabold">{config.businessName}</h1>
+          <p className="whitespace-pre-line font-light text-5xl w-3/4">
+            {config.heroText}
+          </p>
+          <a
+            href="#contact"
+            className="btn btn-lg btn-primary w-fit text-white"
+          >
+            Contact Us Today
+          </a>
         </div>
       </div>
-      <video autoPlay loop muted className="w-full h-full object-cover flex-1">
-        <source src={heroVideo} type="video/mp4" />
-      </video>
+      <div className="flex-1 relative">
+        <video
+          autoPlay
+          loop
+          muted
+          className="w-full h-full object-cover absolute top-0 left-0 right-0 bottom-0"
+        >
+          <source src={heroVideo} type="video/mp4" />
+        </video>
+      </div>
       <div className="absolute w-4/12 top-1/2 left-1/2 -translate-x-1/4 -translate-y-1/2 bg-primary p-4 flex flex-col items-center gap-8 pb-12">
         <div className="relative">
           <video
             autoPlay
             loop
             muted
-            className="w-full object-cover aspect-square"
+            width={0}
+            height={0}
+            className="w-full h-full object-cover aspect-square"
           >
             <source src={project1Video} type="video/mp4" />
           </video>
-          <div className="flex items-center gap-1 bg-gray-200 p-4 py-3 w-fit rounded-full absolute bottom-4 left-1/2 -translate-x-1/2 cursor-pointer hover:bg-gray-100 transition">
-            <Icon icon="fluent:tap-double-20-filled" className="text-2xl" />
-            <h1 className="capitalize font-light text-sm">Check it out</h1>
+          <div className="absolute bottom-4 w-full flex justify-center">
+            <a
+              href="#"
+              className="btn flex items-center gap-1 bg-gray-200 p-4 py-3 w-fit rounded-full"
+            >
+              <Icon icon="fluent:tap-double-20-filled" className="text-2xl" />
+              <h1 className="capitalize font-light text-sm">Check it out</h1>
+            </a>
           </div>
         </div>
 
