@@ -40,7 +40,9 @@ const Hero = () => {
     <div className="flex w-full relative bg-secondary">
       <div className="flex flex-1 p-8">
         <div className="flex flex-col w-5/6 gap-8">
-          <h1 className="text-8xl font-extrabold">{config.businessName}</h1>
+          <h1 className="text-8xl max-md:text-7xl font-extrabold">
+            {config.businessName}
+          </h1>
           <p className="whitespace-pre-line font-light text-5xl w-3/4">
             {config.heroText}
           </p>

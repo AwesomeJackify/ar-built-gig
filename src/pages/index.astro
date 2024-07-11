@@ -1,14 +1,18 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { Image } from "astro:assets";
 import config from "../config.json";
 
 import Hero from "../components/Hero";
 import introVideo from "../assets/videos/intro.mp4";
+
+import bioImg1 from "../assets/images/bio1.png";
+import bioImg2 from "../assets/images/bio2.png";
 ---
 
 <Layout title={config.businessName}>
   <Hero client:load />
-  <div class="bg-accent relative">
+  <section class="bg-accent relative">
     <h1 class="absolute text-center top-16 w-full text-6xl">
       My story, briefly.
     </h1>
@@ -30,7 +34,29 @@ import introVideo from "../assets/videos/intro.mp4";
         <source src={introVideo} type="video/mp4" />
       </video>
     </div>
-  </div>
+  </section>
+  <section
+    class="max-w-screen-lg mx-auto flex py-16 max-md:py-8 px-2 max-md:flex-col gap-16 max-md:gap-8"
+  >
+    <div class="flex flex-col flex-1 gap-16 max-md:gap-8">
+      <h1 class="text-8xl max-md:text-7xl font-extrabold">Meet The Boys</h1>
+      <p class="whitespace-pre-line text-4xl font-extralight">
+        {config.bioText}
+      </p>
+    </div>
+    <div class="flex-1 flex flex-col gap-4 my-auto">
+      <Image
+        src={bioImg1}
+        alt="bio image 1"
+        class:list={["w-5/6 border-primary border-[16px] self-end"]}
+      />
+      <Image
+        src={bioImg2}
+        alt="bio image 2"
+        class:list={["w-5/6 border-primary border-[16px]"]}
+      />
+    </div>
+  </section>
 </Layout>
 
 <script>
