@@ -2,15 +2,25 @@ import config from "../config.json";
 import { Icon } from "@iconify-icon/react";
 
 import project1Video from "../assets/videos/project1.mp4";
+import project2Video from "../assets/videos/project2.mp4";
+
+import project1Img from "../assets/images/project1.png";
+import project2Img from "../assets/images/project2.png";
 
 import { useEffect, useRef, useState } from "react";
 
 const Hero = () => {
   const [heroVideo, setHeroVideo] = useState(project1Video);
+  const heroVideo1Ref = useRef<HTMLVideoElement | null>(null);
+  const heroVideo2Ref = useRef<HTMLVideoElement | null>(null);
+  const miniVideo1Ref = useRef<HTMLVideoElement | null>(null);
+  const miniVideo2Ref = useRef<HTMLVideoElement | null>(null);
+
   const [progress, setProgress] = useState(0);
   const animationFrameId = useRef<number | null>(null);
 
   useEffect(() => {
+    console.log(heroVideo);
     const video = document.querySelector("video");
     video?.addEventListener("loadedmetadata", () => {
       console.log(video?.duration);
@@ -36,14 +46,31 @@ const Hero = () => {
     });
   }, [heroVideo]);
 
+  const handleProgressClick = (num: number) => {
+    console.log(num);
+    if (num === 1) {
+      setHeroVideo(project1Video);
+      if (heroVideo1Ref.current && miniVideo1Ref.current) {
+        heroVideo1Ref.current.currentTime = 0;
+        miniVideo1Ref.current.currentTime = 0;
+      }
+    } else if (num === 2 && heroVideo !== project2Video) {
+      setHeroVideo(project2Video);
+      if (heroVideo2Ref.current && miniVideo2Ref.current) {
+        heroVideo2Ref.current.currentTime = 0;
+        miniVideo2Ref.current.currentTime = 0;
+      }
+    }
+  };
+
   return (
-    <div className="flex w-full relative bg-secondary">
+    <div className="flex w-full relative bg-secondary max-md:flex-col">
       <div className="flex flex-1 p-8">
         <div className="flex flex-col w-5/6 gap-8">
           <h1 className="text-8xl max-md:text-7xl font-extrabold">
             {config.businessName}
           </h1>
-          <p className="whitespace-pre-line font-light text-5xl w-3/4">
+          <p className="whitespace-pre-line font-light text-5xl md:w-3/4 max-md:text-3xl">
             {config.heroText}
           </p>
           <a
@@ -54,27 +81,53 @@ const Hero = () => {
           </a>
         </div>
       </div>
-      <div className="flex-1 relative">
+      <div className="flex-1 relative max-md:h-96">
         <video
+          ref={heroVideo1Ref}
           autoPlay
           loop
           muted
-          className="w-full h-full object-cover absolute top-0 left-0 right-0 bottom-0"
+          className={`${
+            heroVideo == project1Video ? "" : "hidden"
+          } w-full h-full object-cover max-md:hidden absolute top-0 left-0 right-0 bottom-0 grayscale-[50%]`}
         >
-          <source src={heroVideo} type="video/mp4" />
+          <source src={project1Video} type="video/mp4" />
+        </video>
+        <video
+          ref={heroVideo2Ref}
+          autoPlay
+          loop
+          muted
+          className={`${
+            heroVideo == project2Video ? "" : "hidden"
+          } w-full h-full object-cover max-md:hidden absolute top-0 left-0 right-0 bottom-0 grayscale-[50%]`}
+        >
+          <source src={project2Video} type="video/mp4" />
         </video>
       </div>
-      <div className="absolute w-4/12 top-1/2 left-1/2 -translate-x-1/4 -translate-y-1/2 bg-primary p-4 flex flex-col items-center gap-8 pb-12">
+      <div className="md:absolute w-4/12 top-1/2 left-1/2 -translate-x-1/4 -translate-y-1/2 bg-primary p-4 flex flex-col items-center gap-8 pb-12">
         <div className="relative">
           <video
+            ref={miniVideo1Ref}
             autoPlay
             loop
             muted
-            width={0}
-            height={0}
-            className="w-full h-full object-cover aspect-square"
+            className={`${
+              heroVideo == project1Video ? "" : "hidden"
+            } w-full h-full object-cover aspect-square`}
           >
             <source src={project1Video} type="video/mp4" />
+          </video>
+          <video
+            ref={miniVideo2Ref}
+            autoPlay
+            loop
+            muted
+            className={`${
+              heroVideo == project2Video ? "" : "hidden"
+            } w-full h-full object-cover aspect-square`}
+          >
+            <source src={project2Video} type="video/mp4" />
           </video>
           <div className="absolute bottom-4 w-full flex justify-center">
             <a
@@ -94,16 +147,29 @@ const Hero = () => {
           </h2>
         </div>
         <div className="flex w-full gap-2 h-[2px]">
-          <progress
-            className="progress w-full h-full bg-white/20 [&::-webkit-progress-value]:bg-white"
-            value={progress}
-            max="100"
-          ></progress>
-          <progress
-            className="progress w-full h-full bg-white/20 [&::-webkit-progress-value]:bg-white"
-            value="0"
-            max="100"
-          ></progress>
+          <div className="relative w-full h-full flex items-center">
+            <div
+              onClick={() => handleProgressClick(1)}
+              className="h-4 top-0 -translate-y-1/2 left-0 w-full absolute z-10 cursor-pointer"
+            ></div>
+            <progress
+              className="cursor-pointer progress w-full h-full bg-white/20 [&::-webkit-progress-value]:bg-white"
+              value={progress}
+              max="100"
+            ></progress>
+          </div>
+
+          <div className="relative w-full h-full flex items-center">
+            <div
+              onClick={() => handleProgressClick(2)}
+              className="h-4 top-0 -translate-y-1/2 left-0 w-full absolute z-10 cursor-pointer"
+            ></div>
+            <progress
+              className="cursor-pointer progress w-full h-full bg-white/20 [&::-webkit-progress-value]:bg-white"
+              value={0}
+              max="100"
+            ></progress>
+          </div>
         </div>
       </div>
     </div>

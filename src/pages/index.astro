@@ -13,7 +13,9 @@ import bioImg2 from "../assets/images/bio2.png";
 <Layout title={config.businessName}>
   <Hero client:load />
   <section class="bg-accent relative">
-    <h1 class="absolute text-center top-16 w-full text-6xl">
+    <h1
+      class="absolute text-center top-16 max-md:top-8 max-md:text-4xl w-full text-6xl"
+    >
       My story, briefly.
     </h1>
     <div
@@ -29,7 +31,8 @@ import bioImg2 from "../assets/images/bio2.png";
         loop
         muted
         controls
-        class="w-full aspect-video object-cover"
+        playsinline={true}
+        class="w-full aspect-video max-md:h-96 object-cover"
       >
         <source src={introVideo} type="video/mp4" />
       </video>
@@ -40,7 +43,7 @@ import bioImg2 from "../assets/images/bio2.png";
   >
     <div class="flex flex-col flex-1 gap-16 max-md:gap-8">
       <h1 class="text-8xl max-md:text-7xl font-extrabold">Meet The Boys</h1>
-      <p class="whitespace-pre-line text-4xl font-extralight">
+      <p class="whitespace-pre-line text-4xl max-md:text-3xl font-extralight">
         {config.bioText}
       </p>
     </div>
