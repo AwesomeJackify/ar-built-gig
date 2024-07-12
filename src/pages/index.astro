@@ -5,9 +5,10 @@ import config from "../config.json";
 
 import Hero from "../components/Hero";
 import introVideo from "../assets/videos/intro.mp4";
+import Gallery from "../components/Gallery";
 
-import bioImg1 from "../assets/images/bio1.png";
-import bioImg2 from "../assets/images/bio2.png";
+import bioImg1 from "../assets/images/bio/bio1.jpg";
+import bioImg3 from "../assets/images/bio/bio3.jpg";
 ---
 
 <Layout title={config.businessName}>
@@ -38,26 +39,50 @@ import bioImg2 from "../assets/images/bio2.png";
       </video>
     </div>
   </section>
-  <section
-    class="max-w-screen-lg mx-auto flex py-16 max-md:py-8 px-2 max-md:flex-col gap-16 max-md:gap-8"
-  >
-    <div class="flex flex-col flex-1 gap-16 max-md:gap-8">
-      <h1 class="text-8xl max-md:text-7xl font-extrabold">Meet The Boys</h1>
-      <p class="whitespace-pre-line text-4xl max-md:text-3xl font-extralight">
-        {config.bioText}
-      </p>
-    </div>
-    <div class="flex-1 flex flex-col gap-4 my-auto">
-      <Image
-        src={bioImg1}
-        alt="bio image 1"
-        class:list={["w-5/6 border-primary border-[16px] self-end"]}
-      />
-      <Image
-        src={bioImg2}
-        alt="bio image 2"
-        class:list={["w-5/6 border-primary border-[16px]"]}
-      />
+  <section class="bg-secondary py-16 max-md:py-8 px-2">
+    <div class="max-w-screen-lg mx-auto flex flex-col gap-8">
+      <div
+        class="grid grid-cols-2 max-md:grid-cols-1 grid-rows-1 gap-16 max-md:gap-8"
+      >
+        <h1 class="md:hidden text-8xl max-md:text-7xl font-extrabold">
+          Meet The Boys
+        </h1>
+        <div class="flex flex-col gap-16 max-md:gap-8 max-md:order-1">
+          <h1 class="max-md:hidden text-8xl max-md:text-7xl font-extrabold">
+            Meet The Boys
+          </h1>
+          <p
+            class="whitespace-pre-line text-4xl max-md:text-3xl font-extralight"
+          >
+            {config.bioText}
+          </p>
+        </div>
+        <div class="flex flex-col h-full max-md:h-[1000px] max-md:gap-4 gap-8">
+          <div
+            class="relative w-full h-full flex-1 overflow-hidden border-primary border-[16px]"
+          >
+            <Image
+              src={bioImg1}
+              alt="bio image 1"
+              class:list={[
+                "absolute top-0 w-full h-full left-1/2 -translate-x-1/2 object-cover object-top ",
+              ]}
+            />
+          </div>
+          <div
+            class="relative w-full h-full flex-1 overflow-hidden border-primary border-[16px]"
+          >
+            <Image
+              src={bioImg3}
+              alt="bio image 3"
+              class:list={[
+                "absolute top-0 w-full left-1/2 -translate-x-1/2 object-cover h-full",
+              ]}
+            />
+          </div>
+        </div>
+      </div>
+      <Gallery client:only="react" />
     </div>
   </section>
 </Layout>
