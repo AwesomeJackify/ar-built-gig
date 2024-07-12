@@ -34,6 +34,8 @@ const Hero = () => {
       setProgress(0);
       video.currentTime = 0;
       miniVideo.currentTime = 0;
+      video.play();
+      miniVideo.play();
     }
 
     const updateProgress = () => {
@@ -50,12 +52,10 @@ const Hero = () => {
     };
 
     const handleEnded = () => {
-      console.log("ended");
       if (heroVideo === project1Video) {
         setHeroVideo(project2Video);
         setProgress(0);
       } else {
-        console.log("here2");
         setHeroVideo(project1Video);
         setProgress(0);
       }
