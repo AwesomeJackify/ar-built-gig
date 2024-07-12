@@ -18,11 +18,23 @@ const Hero = () => {
 
   const [progress, setProgress] = useState(0);
   const animationFrameId = useRef<number | null>(null);
+
   useEffect(() => {
     const video =
       heroVideo === project1Video
         ? heroVideo1Ref.current
         : heroVideo2Ref.current;
+
+    const miniVideo =
+      heroVideo === project1Video
+        ? miniVideo1Ref.current
+        : miniVideo2Ref.current;
+
+    if (video && miniVideo) {
+      setProgress(0);
+      video.currentTime = 0;
+      miniVideo.currentTime = 0;
+    }
 
     const updateProgress = () => {
       if (video) {
@@ -37,10 +49,24 @@ const Hero = () => {
       }
     };
 
+    const handleEnded = () => {
+      console.log("ended");
+      if (heroVideo === project1Video) {
+        setHeroVideo(project2Video);
+        setProgress(0);
+      } else {
+        console.log("here2");
+        setHeroVideo(project1Video);
+        setProgress(0);
+      }
+    };
+
     video?.addEventListener("timeupdate", handleTimeUpdate);
+    video?.addEventListener("ended", handleEnded);
 
     return () => {
       video?.removeEventListener("timeupdate", handleTimeUpdate);
+      video?.removeEventListener("ended", handleEnded);
       if (animationFrameId.current) {
         cancelAnimationFrame(animationFrameId.current);
         animationFrameId.current = null;
@@ -49,21 +75,10 @@ const Hero = () => {
   }, [heroVideo]);
 
   const handleProgressClick = (num: number) => {
-    console.log(num);
-    if (num === 1) {
+    if (num === 1 && heroVideo !== project1Video) {
       setHeroVideo(project1Video);
-      if (heroVideo1Ref.current && miniVideo1Ref.current) {
-        setProgress(0);
-        heroVideo1Ref.current.currentTime = 0;
-        miniVideo1Ref.current.currentTime = 0;
-      }
     } else if (num === 2 && heroVideo !== project2Video) {
-      setProgress(0);
       setHeroVideo(project2Video);
-      if (heroVideo2Ref.current && miniVideo2Ref.current) {
-        heroVideo2Ref.current.currentTime = 0;
-        miniVideo2Ref.current.currentTime = 0;
-      }
     }
   };
 
@@ -89,7 +104,6 @@ const Hero = () => {
         <video
           ref={heroVideo1Ref}
           autoPlay
-          loop
           muted
           className={`${
             heroVideo == project1Video ? "" : "hidden"
@@ -100,7 +114,6 @@ const Hero = () => {
         <video
           ref={heroVideo2Ref}
           autoPlay
-          loop
           muted
           className={`${
             heroVideo == project2Video ? "" : "hidden"
@@ -114,7 +127,6 @@ const Hero = () => {
           <video
             ref={miniVideo1Ref}
             autoPlay
-            loop
             muted
             className={`${
               heroVideo == project1Video ? "" : "hidden"
@@ -125,7 +137,6 @@ const Hero = () => {
           <video
             ref={miniVideo2Ref}
             autoPlay
-            loop
             muted
             className={`${
               heroVideo == project2Video ? "" : "hidden"
