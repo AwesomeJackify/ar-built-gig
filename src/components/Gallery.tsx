@@ -22,7 +22,7 @@ const images = [
 
 const Gallery = () => {
   return (
-    <Marquee autoFill pauseOnHover className="w-full ">
+    <Marquee autoFill pauseOnHover className="w-full">
       {images.map((image, index) => (
         <img
           key={index}

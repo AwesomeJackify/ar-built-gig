@@ -83,7 +83,7 @@ const Hero = () => {
   };
 
   return (
-    <div className="flex w-full relative bg-secondary max-md:flex-col">
+    <div className="flex w-full relative bg-secondary max-md:flex-col min-h-screen">
       <div className="flex flex-1 p-8">
         <div className="flex flex-col w-5/6 gap-8">
           <h1 className="text-8xl max-md:text-7xl font-extrabold">
@@ -122,7 +122,7 @@ const Hero = () => {
           <source src={project2Video} type="video/mp4" />
         </video>
       </div>
-      <div className="md:absolute w-4/12 top-1/2 left-1/2 -translate-x-1/4 -translate-y-1/2 bg-primary p-4 flex flex-col items-center gap-8 pb-12">
+      <div className="md:absolute w-3/12 top-1/2 left-1/2 -translate-x-1/4 -translate-y-1/2 bg-primary p-4 flex flex-col items-center gap-8 pb-12">
         <div className="relative">
           <video
             ref={miniVideo1Ref}
