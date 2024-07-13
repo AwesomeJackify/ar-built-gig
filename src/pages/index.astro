@@ -2,9 +2,9 @@
 import Layout from "../layouts/Layout.astro";
 import { Image } from "astro:assets";
 import config from "../config.json";
+import { Cloudinary } from "@cloudinary/url-gen";
 
 import Hero from "../components/Hero";
-import introVideo from "../assets/videos/intro.mp4";
 import Gallery from "../components/Gallery";
 
 import bioImg1 from "../assets/images/bio/bio1.jpg";
@@ -16,10 +16,37 @@ const fields = [
   { name: "email", text: "Email" },
   { name: "message", text: "Message" },
 ];
+
+const cld = new Cloudinary({
+  cloud: {
+    cloudName: import.meta.env.CLOUDINARY_CLOUD_NAME,
+  },
+});
+
+const introVideoURL = cld.video("ar-built/intro_qma8pl").toURL();
+const project1VideoURL = cld.video("ar-built/project1_a2dmrf").toURL();
+const project2VideoURL = cld.video("ar-built/project2_m2oseo").toURL();
+
+const projects = [
+  {
+    url: project1VideoURL,
+    title: "Project 1",
+    description:
+      "A residential project in the Botany area that offers the very best of urban life.",
+    link: "/projects/project-1",
+  },
+  {
+    url: project2VideoURL,
+    title: "Curved Deck",
+    description:
+      "A residential project in the Ponsonby area that offers the very best of urban life.",
+    link: "/projects/project-2",
+  },
+];
 ---
 
 <Layout title={config.businessName}>
-  <Hero client:load />
+  <Hero client:load projects={projects} />
   <section class="bg-accent relative">
     <h1
       class="absolute text-center top-16 max-md:top-8 max-md:text-4xl w-full text-6xl"
@@ -42,7 +69,7 @@ const fields = [
         playsinline={true}
         class="w-full aspect-video max-md:h-96 object-cover"
       >
-        <source src={introVideo} type="video/mp4" />
+        <source src={introVideoURL} type="video/mp4" />
       </video>
     </div>
   </section>
