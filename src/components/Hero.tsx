@@ -112,7 +112,7 @@ const Hero = () => {
           </a>
         </div>
       </div>
-      <div className="flex-1 relative max-md:h-96">
+      <div className="flex-1 relative max-md:h-96 max-md:hidden">
         <video
           ref={heroVideo1Ref}
           autoPlay
@@ -134,7 +134,7 @@ const Hero = () => {
           <source src={project2Video} type="video/mp4" />
         </video>
       </div>
-      <div className="md:absolute w-3/12 top-1/2 left-1/2 -translate-x-1/4 -translate-y-1/2 bg-primary p-4 flex flex-col items-center gap-8 pb-12">
+      <div className="md:absolute max-md:w-11/12 max-md:mx-auto w-3/12 top-1/2 left-1/2 -translate-x-1/4 -translate-y-1/2 bg-primary p-4 flex flex-col items-center gap-8 pb-12 max-md:-translate-x-0 max-md:-translate-y-0 max-md:mb-8">
         <div className="relative">
           <video
             ref={miniVideo1Ref}

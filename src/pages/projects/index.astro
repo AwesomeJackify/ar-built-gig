@@ -44,18 +44,19 @@ const projects = [
 
 <Layout title="Projects">
   <div
-    class="flex flex-col text-5xl justify-center absolute right-2 top-1/2 z-50 max-md:hidden"
+    class="flex flex-col text-5xl justify-center absolute right-2 top-1/2 z-50 max-md:hidden gap-4"
   >
-    <span
-      class="icon-[radix-icons--caret-up] text-primary cursor-pointer hover:text-black transition"
-      id="upButton"></span>
-    <span
-      class="icon-[radix-icons--caret-up] text-primary -scale-y-100 hover:text-black transition cursor-pointer"
-      id="downButton"></span>
+    <Icon
+      name="radix-icons:arrow-down"
+      class="text-white border-white hover:bg-white border-2 rounded-full -scale-y-100 hover:text-black transition cursor-pointer"
+      id="downButton"
+    />
+    <Icon
+      name="radix-icons:arrow-up"
+      class="text-white border-white hover:bg-white border-2 rounded-full -scale-y-100 hover:text-black transition cursor-pointer"
+      id="upButton"
+    />
   </div>
-  <button
-    class="icon-[material-symbols--close] fixed top-4 right-4 text-black z-50 text-5xl cursor-pointer transition"
-    onclick="window.history.go(-1); return false;"></button>
   <div class="h-[calc(100dvh)] overflow-hidden">
     {
       projects.map((project) => {
