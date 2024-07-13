@@ -1,0 +1,43 @@
+---
+import config from "../config.json";
+import { Icon } from "astro-icon/components";
+---
+
+<div class="drawer drawer-end">
+  <input id="my-drawer-4" type="checkbox" class="drawer-toggle" />
+  <div class="drawer-content">
+    <!-- Page content here -->
+    <label
+      for="my-drawer-4"
+      class="drawer-button btn btn-sm btn-primary fixed top-4 right-4 z-50 px-8"
+      >MENU</label
+    >
+  </div>
+  <div class="drawer-side z-50">
+    <label for="my-drawer-4" aria-label="close sidebar" class="drawer-overlay"
+    ></label>
+    <div
+      class="bg-secondary text-base-content min-h-full w-80 p-4 flex flex-col"
+    >
+      <div class="flex flex-col text-2xl">
+        {
+          config.pages.map((page) => (
+            <a
+              href={page.url}
+              class="hover:text-primary transition hover:translate-x-4 group flex items-center gap-1"
+            >
+              <Icon
+                name="bi:heart-arrow"
+                class="group-hover:opacity-100 opacity-0 transition"
+              />
+              {page.name}
+            </a>
+          ))
+        }
+      </div>
+      <h1 class="font-extrabold text-4xl mt-auto text-end">
+        {config.businessName}
+      </h1>
+    </div>
+  </div>
+</div>

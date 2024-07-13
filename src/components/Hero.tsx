@@ -4,13 +4,15 @@ import { Icon } from "@iconify-icon/react";
 import project1Video from "../assets/videos/project1.mp4";
 import project2Video from "../assets/videos/project2.mp4";
 
-import project1Img from "../assets/images/project1.png";
-import project2Img from "../assets/images/project2.png";
-
 import { useEffect, useRef, useState } from "react";
 
 const Hero = () => {
   const [heroVideo, setHeroVideo] = useState(project1Video);
+  const [checkItOutLink, setCheckItOutLink] = useState("/projects/project-1");
+  const [heroTitle, setHeroTitle] = useState("Project 1");
+  const [heroDescription, setHeroDescription] = useState(
+    "Residential and commercial spaces in tune with nature"
+  );
   const heroVideo1Ref = useRef<HTMLVideoElement | null>(null);
   const heroVideo2Ref = useRef<HTMLVideoElement | null>(null);
   const miniVideo1Ref = useRef<HTMLVideoElement | null>(null);
@@ -77,13 +79,23 @@ const Hero = () => {
   const handleProgressClick = (num: number) => {
     if (num === 1 && heroVideo !== project1Video) {
       setHeroVideo(project1Video);
+      setCheckItOutLink("/projects/project-1");
+      setHeroTitle("Project 1");
+      setHeroDescription(
+        "Residential and commercial spaces in tune with nature"
+      );
     } else if (num === 2 && heroVideo !== project2Video) {
       setHeroVideo(project2Video);
+      setCheckItOutLink("/projects/curved-deck");
+      setHeroTitle("Curved Deck");
+      setHeroDescription(
+        "A beautiful curved deck that complements the natural landscape"
+      );
     }
   };
 
   return (
-    <div className="flex w-full relative bg-secondary max-md:flex-col min-h-screen">
+    <div className="flex w-full relative bg-secondary max-md:flex-col min-h-[calc(100dvh)]">
       <div className="flex flex-1 p-8">
         <div className="flex flex-col w-5/6 gap-8">
           <h1 className="text-8xl max-md:text-7xl font-extrabold">
@@ -146,7 +158,7 @@ const Hero = () => {
           </video>
           <div className="absolute bottom-4 w-full flex justify-center">
             <a
-              href="#"
+              href={checkItOutLink}
               className="btn flex items-center gap-1 bg-gray-200 p-4 py-3 w-fit"
             >
               <Icon icon="fluent:tap-double-20-filled" className="text-2xl" />
@@ -156,10 +168,8 @@ const Hero = () => {
         </div>
 
         <div className="flex flex-col items-center text-center gap-2 text-white">
-          <h1 className="text-5xl">Project #1</h1>
-          <h2 className="font-extralight text-xl">
-            Residential and commercial spaces in tune with nature
-          </h2>
+          <h1 className="text-5xl">{heroTitle}</h1>
+          <h2 className="font-extralight text-xl">{heroDescription}</h2>
         </div>
         <div className="flex w-full gap-2 h-[2px]">
           <div className="relative w-full h-full flex items-center">
