@@ -3,6 +3,7 @@ import Layout from "../layouts/Layout.astro";
 import { Image } from "astro:assets";
 import config from "../config.json";
 import { Cloudinary } from "@cloudinary/url-gen";
+import { Resize } from "@cloudinary/url-gen/actions/resize";
 
 import Hero from "../components/Hero";
 import Gallery from "../components/Gallery";
@@ -23,9 +24,16 @@ const cld = new Cloudinary({
   },
 });
 
-const introVideoURL = cld.video("ar-built/intro_qma8pl").toURL();
-const project1VideoURL = cld.video("ar-built/project1_a2dmrf").toURL();
-const project2VideoURL = cld.video("ar-built/project2_m2oseo").toURL();
+const introVideo = cld.video("ar-built/intro_qma8pl");
+introVideo.resize(Resize.scale().width(1920));
+const introVideoURL = introVideo.toURL();
+
+const project1Video = cld.video("ar-built/project1_a2dmrf");
+project1Video.resize(Resize.scale().width(300));
+const project1VideoURL = project1Video.toURL();
+const project2Video = cld.video("ar-built/project2_m2oseo");
+project2Video.resize(Resize.scale().width(300));
+const project2VideoURL = project2Video.toURL();
 
 const projects = [
   {
@@ -66,7 +74,7 @@ const projects = [
         loop
         muted
         controls
-        playsinline={true}
+        playsinline
         class="w-full aspect-video max-md:h-96 object-cover"
       >
         <source src={introVideoURL} type="video/mp4" />

@@ -21,6 +21,7 @@ const Hero = ({ projects }: Props) => {
   const animationFrameId = useRef<number | null>(null);
 
   const currentProject = projects[currentProjectIndex];
+  const bufferTime = 1; // Buffer time to detect video end
 
   useEffect(() => {
     const video = videoRefs.current[currentProjectIndex];
@@ -30,13 +31,33 @@ const Hero = ({ projects }: Props) => {
       setProgress(0);
       video.currentTime = 0;
       miniVideo.currentTime = 0;
-      video.play();
-      miniVideo.play();
+      video.playbackRate = 0.8;
+      miniVideo.playbackRate = 0.8;
+
+      const interval = setInterval(() => {
+        if (video.currentTime >= video.duration - bufferTime) {
+          // Video is about to end, handle logic here
+          setCurrentProjectIndex(
+            (prevIndex) => (prevIndex + 1) % projects.length
+          );
+        }
+      }, 100); // Check every 100ms
+
+      return () => clearInterval(interval); // Clean up interval on component unmount
     }
+  }, [currentProjectIndex, projects.length]);
+
+  const handleProgressClick = (index: number) => {
+    setCurrentProjectIndex(index);
+    setProgress(0);
+  };
+
+  useEffect(() => {
+    const video = videoRefs.current[currentProjectIndex];
 
     const updateProgress = () => {
       if (video) {
-        setProgress((video.currentTime / video.duration) * 100);
+        setProgress((video.currentTime / (video.duration - bufferTime)) * 100);
         animationFrameId.current = requestAnimationFrame(updateProgress);
       }
     };
@@ -47,28 +68,16 @@ const Hero = ({ projects }: Props) => {
       }
     };
 
-    const handleEnded = () => {
-      setCurrentProjectIndex((prevIndex) => (prevIndex + 1) % projects.length);
-      setProgress(0);
-    };
-
     video?.addEventListener("timeupdate", handleTimeUpdate);
-    video?.addEventListener("ended", handleEnded);
 
     return () => {
       video?.removeEventListener("timeupdate", handleTimeUpdate);
-      video?.removeEventListener("ended", handleEnded);
       if (animationFrameId.current) {
         cancelAnimationFrame(animationFrameId.current);
         animationFrameId.current = null;
       }
     };
-  }, [currentProjectIndex, projects.length]);
-
-  const handleProgressClick = (index: number) => {
-    setCurrentProjectIndex(index);
-    setProgress(0);
-  };
+  }, [currentProjectIndex]);
 
   return (
     <div className="flex w-full relative bg-secondary max-md:flex-col min-h-[calc(100dvh)]">
@@ -95,16 +104,18 @@ const Hero = ({ projects }: Props) => {
             ref={(el) => (videoRefs.current[index] = el)}
             autoPlay
             muted
+            playsInline
+            loop
             className={`${
               currentProjectIndex === index ? "" : "hidden"
-            } w-full h-full object-cover max-md:hidden absolute top-0 left-0 right-0 bottom-0 grayscale-[50%]`}
+            } w-full h-full object-cover absolute top-0 left-0 right-0 bottom-0 grayscale-[50%]`}
           >
             <source src={project.url} type="video/mp4" />
           </video>
         ))}
       </div>
-      <div className="md:absolute max-md:w-11/12 max-md:mx-auto w-3/12 top-1/2 left-1/2 -translate-x-1/4 -translate-y-1/2 bg-primary p-4 flex flex-col items-center gap-8 pb-12 max-md:-translate-x-0 max-md:-translate-y-0 max-md:mb-8 max-md:hidden">
-        <div className="relative">
+      <div className="md:absolute max-md:w-11/12 max-md:mx-auto w-96 top-1/2 left-1/2 -translate-x-1/4 -translate-y-1/2 bg-primary p-8 px-6 flex flex-col items-center gap-8 pb-12 max-md:-translate-x-0 max-md:-translate-y-0 max-md:mb-8">
+        <div className="relative w-full h-ful">
           {projects.map((project, index) => (
             <video
               key={index}
@@ -112,7 +123,7 @@ const Hero = ({ projects }: Props) => {
               autoPlay
               muted
               playsInline
-              webkit-playsinline="true"
+              loop
               className={`${
                 currentProjectIndex === index ? "" : "hidden"
               } w-full h-full object-cover aspect-square`}
