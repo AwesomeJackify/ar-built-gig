@@ -54,6 +54,17 @@ const projects = [
 ---
 
 <Layout title={config.businessName}>
+  <div
+    id="loader"
+    class="fixed top-0 left-0 w-full h-screen bg-secondary z-50 flex flex-col items-center justify-center"
+  >
+    <div class="flex items-baseline">
+      <h1 class="font-koulen text-9xl text-center max-md:text-4xl">
+        {config.businessName}
+      </h1>
+      <div class="loading loading-ball w-24"></div>
+    </div>
+  </div>
   <Hero client:load projects={projects} />
   <section class="bg-accent relative">
     <h1
@@ -205,15 +216,15 @@ const projects = [
   import Lenis from "lenis";
   import SplitType from "split-type";
 
-  const lenis = new Lenis();
+  // const lenis = new Lenis();
 
-  lenis.on("scroll", ScrollTrigger.update);
+  // lenis.on("scroll", ScrollTrigger.update);
 
-  gsap.ticker.add((time) => {
-    lenis.raf(time * 1000);
-  });
+  // gsap.ticker.add((time) => {
+  //   lenis.raf(time * 1000);
+  // });
 
-  gsap.ticker.lagSmoothing(0);
+  // gsap.ticker.lagSmoothing(0);
 
   gsap.registerPlugin(ScrollTrigger);
 
@@ -242,4 +253,49 @@ const projects = [
       stagger: 0.1,
     }
   );
+
+  const introTimeline = gsap.timeline({
+    paused: true,
+    onComplete: () => {
+      if (bodyElement) {
+        bodyElement.classList.remove("max-h-screen");
+        bodyElement.classList.remove("overflow-hidden");
+      }
+    },
+  });
+  introTimeline
+    .to("#loader", { xPercent: -100, ease: "power2.out", duration: 1 })
+    .to("#loader", { display: "none" });
+
+  const bodyElement = document.querySelector("body");
+  if (bodyElement) {
+    bodyElement.classList.add("max-h-screen");
+    bodyElement.classList.add("overflow-hidden");
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const loader = document.getElementById("loader");
+    const mediaElements = document.querySelectorAll("video");
+
+    let loadedCount = 0;
+    const totalMediaElements = mediaElements.length;
+
+    const checkLoaded = () => {
+      loadedCount++;
+      if (loadedCount >= totalMediaElements) {
+        if (bodyElement) {
+          introTimeline.play();
+        }
+      }
+    };
+
+    mediaElements.forEach((media) => {
+      if (media.readyState >= HTMLMediaElement.HAVE_ENOUGH_DATA) {
+        checkLoaded();
+      } else {
+        media.addEventListener("loadeddata", checkLoaded);
+        media.addEventListener("error", checkLoaded); // in case an image fails to load
+      }
+    });
+  });
 </script>
