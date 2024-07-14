@@ -96,6 +96,7 @@ const projects = [
             Meet The Boys
           </h1>
           <p
+            id="bioText"
             class="whitespace-pre-line text-4xl max-md:text-3xl font-extralight"
           >
             {config.bioText}
@@ -188,7 +189,7 @@ const projects = [
             ))
           }
         </div>
-        <div class="flex w-full justify-center my-6">
+        <div class="flex text-[#e4ab97] w-full justify-center my-6">
           <input type="submit" value="Submit" class="btn btn-primary" />
         </div>
       </form>
@@ -200,6 +201,7 @@ const projects = [
   import gsap from "gsap";
   import { ScrollTrigger } from "gsap/ScrollTrigger";
   import Lenis from "lenis";
+  import SplitType from "split-type";
 
   const lenis = new Lenis();
 
@@ -222,4 +224,20 @@ const projects = [
     },
     maskImage: "radial-gradient(circle, black 100%, rgb(0, 0, 0, 0) 100%)",
   });
+
+  new SplitType("#bioText");
+  gsap.fromTo(
+    ".line",
+    { color: "gray" },
+    {
+      color: "black",
+      scrollTrigger: {
+        trigger: "#bioText",
+        start: "top center",
+        end: "bottom center",
+        scrub: true,
+      },
+      stagger: 0.1,
+    }
+  );
 </script>
