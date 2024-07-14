@@ -9,7 +9,10 @@ import config from "../config.json";
 ---
 
 <!doctype html>
-<html lang="en">
+<html
+  lang="en"
+  class={`${Astro.url.pathname == "/projects" ? "overscroll-none" : ""}`}
+>
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content={config.bioText} />
