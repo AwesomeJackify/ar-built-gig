@@ -83,7 +83,7 @@ const Hero = ({ projects }: Props) => {
     <div className="flex w-full relative bg-secondary max-md:flex-col min-h-[calc(100dvh)]">
       <div className="flex flex-1 p-8">
         <div className="flex flex-col w-5/6 gap-8">
-          <h1 className="text-8xl max-md:text-7xl font-extrabold">
+          <h1 className="text-8xl font-koulen max-md:text-7xl font-extrabold">
             {config.businessName}
           </h1>
           <p className="whitespace-pre-line font-light text-5xl md:w-3/4 max-md:text-3xl">
