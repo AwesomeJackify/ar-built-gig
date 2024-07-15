@@ -31,8 +31,6 @@ const Hero = ({ projects }: Props) => {
       setProgress(0);
       video.currentTime = 0;
       miniVideo.currentTime = 0;
-      video.playbackRate = 0.8;
-      miniVideo.playbackRate = 0.8;
 
       const interval = setInterval(() => {
         if (video.currentTime >= video.duration - bufferTime) {
