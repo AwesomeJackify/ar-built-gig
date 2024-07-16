@@ -108,22 +108,23 @@ const projects = [
           >
             Meet The Boys
           </h1>
-          <div
-            id="bioText"
-            class="whitespace-pre-line text-4xl max-md:text-3xl font-extralight"
-          >
-            <p>
-              Grew up assisting my old man on his builds, and now I've been in
-              the construction game full-time for over 10 years. Finally took
-              the plunge to start our own last year! With my three dedicated
-              brothers by my side, we're grinding hard—truly the best team.
-            </p>
-            <p class="mt-8 max-md:mt-4">
-              Couldn't have done it without them and our supportive crew—they
-              know who they are. Out here showing that there are still
-              hardworking builders who take immense pride in their craft!
-              Leaders creating leaders.
-            </p>
+          <div id="bioText">
+            <div
+              class="whitespace-pre-line text-4xl max-md:text-3xl font-extralight"
+            >
+              <p id="bioText1">
+                Grew up assisting my old man on his builds, and now I've been in
+                the construction game full-time for over 10 years. Finally took
+                the plunge to start our own last year! With my three dedicated
+                brothers by my side, we're grinding hard—truly the best team.
+              </p>
+              <p id="bioText2" class="mt-8 max-md:mt-4">
+                Couldn't have done it without them and our supportive crew—they
+                know who they are. Out here showing that there are still
+                hardworking builders who take immense pride in their craft!
+                Leaders creating leaders.
+              </p>
+            </div>
           </div>
         </div>
         <div class="flex flex-col h-full max-md:h-[1000px] max-md:gap-4 gap-8">
@@ -251,7 +252,8 @@ const projects = [
     maskImage: "radial-gradient(circle, black 100%, rgb(0, 0, 0, 0) 100%)",
   });
 
-  new SplitType("#bioText");
+  new SplitType("#bioText1");
+  new SplitType("#bioText2");
   gsap.fromTo(
     ".line",
     { color: "gray" },
