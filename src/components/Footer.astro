@@ -26,6 +26,7 @@ import config from "../config.json";
       {
         socials.map((social) => (
           <a
+            aria-label={social.name}
             href={social.url}
             target="_blank"
             rel="noopener noreferrer"
