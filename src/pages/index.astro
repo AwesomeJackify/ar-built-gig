@@ -287,29 +287,46 @@ const projects = [
     bodyElement.classList.add("max-h-screen");
     bodyElement.classList.add("overflow-hidden");
   }
-
   document.addEventListener("DOMContentLoaded", () => {
     const loader = document.getElementById("loader");
     const mediaElements = document.querySelectorAll("video");
 
     let loadedCount = 0;
     const totalMediaElements = mediaElements.length;
+    const timeoutDuration = 5000; // 5 seconds
+    let timeoutReached = false;
 
     const checkLoaded = () => {
       loadedCount++;
       if (loadedCount >= totalMediaElements) {
-        if (bodyElement) {
+        if (loader) {
           introTimeline.play();
+          clearTimeout(timeout);
         }
       }
     };
+
+    const timeout = setTimeout(() => {
+      timeoutReached = true;
+      if (loader) {
+        introTimeline.play();
+      }
+    }, timeoutDuration);
 
     mediaElements.forEach((media) => {
       if (media.readyState >= HTMLMediaElement.HAVE_ENOUGH_DATA) {
         checkLoaded();
       } else {
-        media.addEventListener("loadeddata", checkLoaded);
-        media.addEventListener("error", checkLoaded); // in case an image fails to load
+        media.addEventListener("loadeddata", () => {
+          if (!timeoutReached) {
+            checkLoaded();
+          }
+        });
+        media.addEventListener("error", () => {
+          if (!timeoutReached) {
+            checkLoaded();
+          }
+        });
       }
     });
   });
