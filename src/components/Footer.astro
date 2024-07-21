@@ -1,44 +1,72 @@
 ---
+import astroLogo from "../assets/images/AstroMediaLogo.svg";
+import { Image } from "astro:assets";
 import { Icon } from "astro-icon/components";
-
-const socials = [
-  {
-    name: "Instagram",
-    url: "https://www.instagram.com/ar_built_ltd/?hl=en",
-    icon: "mdi:instagram",
-  },
-];
+import { getCollection } from "astro:content";
 
 import config from "../config.json";
+
+const projects = await getCollection("projects");
 ---
 
-<footer class="footer bg-neutral text-neutral-content p-10">
+<footer class="footer p-10 bg-primary text-base-content text-white">
   <aside>
-    <h1 class="font-koulen text-2xl">
-      {config.businessName}
-      <br />
-    </h1>
-    <p>Providing reliable construction since 2020</p>
+    <!-- <Image src={logo} alt="logo" class="w-32 p-4 rounded-md" /> -->
+    <h1 class="text-4xl font-bold uppercase">{config.businessName}</h1>
+    <p>
+      <!-- <span class="font-robot">{config.businessName} </span><br /> -->
+      Providing reliable services since 2021
+    </p>
   </aside>
   <nav>
-    <h6 class="footer-title">Social</h6>
-    <div class="flex">
-      {
-        socials.map((social) => (
-          <a
-            aria-label={social.name}
-            href={social.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="group flex justify-start"
-          >
-            <Icon
-              name={social.icon}
-              class="w-full h-full text-4xl group-hover:text-accent transition"
-            />
-          </a>
-        ))
-      }
-    </div>
+    <h6 class="footer-title">Projects</h6>
+    {
+      projects.map((project: any) => (
+        <a class="link link-hover" href={`/services/${project.slug}`}>
+          {project.data.name}
+        </a>
+      ))
+    }
   </nav>
+  <nav>
+    <h6 class="footer-title">Support</h6>
+    {
+      config.support.map((supportItem: any) => (
+        <a class="link link-hover" href={supportItem.url}>
+          {supportItem.name}
+        </a>
+      ))
+    }
+  </nav>
+  <nav class="flex flex-col h-full justify-between">
+    {
+      config.socials &&
+        config.socials.map((social: any) => (
+          <div>
+            <h6 class="footer-title">Socials</h6>
+            <a class="group" href={social.url} target="_blank">
+              <Icon
+                name={social.icon}
+                class="w-6 group-hover:text-primary transition-colors"
+              />
+            </a>
+          </div>
+        ))
+    }
+  </nav>
+  <div class="flex flex-col justify-end h-full">
+    <p class="flex items-center gap-1 max-md:self-center">
+      Made possible by <a
+        href="https://astromedia.dev"
+        class="link hover:text-primary transition-colors"
+        target="_blank">Astro Media</a
+      ><Image
+        class="w-5"
+        src={astroLogo}
+        width={10}
+        height={10}
+        alt="digital agency"
+      />
+    </p>
+  </div>
 </footer>
