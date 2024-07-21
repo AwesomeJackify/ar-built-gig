@@ -22,7 +22,7 @@ const projects = await getCollection("projects");
     <h6 class="footer-title">Projects</h6>
     {
       projects.map((project: any) => (
-        <a class="link link-hover" href={`/services/${project.slug}`}>
+        <a class="link link-hover" href={`/projects/${project.slug}`}>
           {project.data.name}
         </a>
       ))
