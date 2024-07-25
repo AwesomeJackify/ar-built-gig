@@ -177,6 +177,6 @@ const projects = [
 
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
-  console.log(Number(urlParams.get("page")));
-  gotoSection(Number(urlParams.get("page")), -1);
+
+  gotoSection(0, -1);
 </script>
