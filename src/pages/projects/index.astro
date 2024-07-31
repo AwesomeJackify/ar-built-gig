@@ -2,44 +2,37 @@
 import Layout from "../../layouts/Layout.astro";
 import { getImage, Image } from "astro:assets";
 import { Icon } from "astro-icon/components";
+import { getCollection } from "astro:content";
+import type { ImageMetadata } from "astro";
 
-import project1Img from "../../assets/images/projects/project-1/project1.png";
+const projectsCollection = await getCollection("projects");
+
+import project1Img from "../../assets/images/projects/townhouses/1.jpeg";
 import project2Img from "../../assets/images/projects/curved-deck/project2.png";
-import project3Img from "../../assets/images/projects/bathroom-reno/project3.png";
+import project3Img from "../../assets/images/projects/bathroom-reno/2.jpeg";
 
 const project1BgImg = await getImage({ src: project1Img });
 const project2BgImg = await getImage({ src: project2Img });
 const project3BgImg = await getImage({ src: project3Img });
 
-const projects = [
-  {
-    name: "Curved Deck",
-    location: "Ponsonby",
-    image: project2Img,
-    bgImage: project2BgImg.src,
-    description:
-      "A residential project in the Ponsonby area that offers the very best of urban life.",
-    url: "/projects/curved-deck",
-  },
-  {
-    name: "Bathroom Reno",
-    location: "Avondale",
-    image: project3Img,
-    bgImage: project3BgImg.src,
-    description:
-      "A bathroom renovation project in Avondale that showcases the best of modern design.",
-    url: "/projects/bathroom-reno",
-  },
-  {
-    name: "Project 1",
-    location: "Botany",
-    image: project1Img,
-    bgImage: project1BgImg.src,
-    description:
-      "A project in Botany that showcases the best of modern design.",
-    url: "/projects/project-1",
-  },
-];
+const projectImgs = [project3Img, project2Img, project1Img];
+const projectBgImgs = [project3BgImg, project2BgImg, project1BgImg];
+
+let projects = [];
+for (let i = 0; i < projectsCollection.length; i++) {
+  projects.push({
+    name: projectsCollection[i].data.name,
+    location: projectsCollection[i].data.location,
+    image: projectImgs[i],
+    bgImage: projectBgImgs[i].src,
+    description: projectsCollection[i].data.description,
+    url: `/projects/${projectsCollection[i].slug}`,
+  });
+}
+
+const projectImages = import.meta.glob<{ default: ImageMetadata }>(
+  "/src/assets/images/projects/**/*.{jpeg,jpg,png,gif}"
+);
 ---
 
 <Layout title="Projects">
@@ -66,6 +59,7 @@ const projects = [
             class="fixed h-full top-0 left-0 w-full bg-cover flex flex-col bg-center"
             style={`background-image: url('${project.bgImage}')`}
           >
+            <div class="absolute top-0 left-0 w-full h-full bg-black opacity-30" />
             <div class="flex flex-col justify-center h-full w-full">
               <div class="flex flex-col items-center relative gap-4 z-10 p-4 max-md:gap-8">
                 <div class="w-[30rem] max-md:w-11/12 bg-[#eee6d3] max-md:text-4xl font-extralight flex items-center h-full flex-col p-4 px-8">
