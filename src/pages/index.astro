@@ -14,6 +14,7 @@ import bioImg3 from "../assets/images/bio/bio3.jpg";
 const fields = [
   { name: "firstName", text: "First Name" },
   { name: "lastName", text: "Last Name" },
+  { name: "phone", text: "Phone" },
   { name: "email", text: "Email" },
   { name: "message", text: "Message" },
 ];
@@ -196,10 +197,21 @@ const projects = [
                 >
                   {field.text}
                 </label>
+                {field.name === "phone" && (
+                  <input
+                    autocomplete="on"
+                    type="tel"
+                    id={field.name}
+                    name={field.name}
+                    required
+                    class="bg-transparent form-input px-4 py-3 w-full rounded focus:outline-none font-extralight"
+                  />
+                )}
                 {field.name === "message" ? (
                   <textarea
                     id={field.name}
                     name={field.name}
+                    required
                     class="bg-transparent form-input px-4 h-96 py-3 w-full rounded focus:outline-none font-extralight"
                   />
                 ) : (
@@ -208,6 +220,7 @@ const projects = [
                     type="text"
                     id={field.name}
                     name={field.name}
+                    required
                     class="bg-transparent form-input px-4 py-3 w-full rounded focus:outline-none font-extralight"
                   />
                 )}
@@ -226,7 +239,6 @@ const projects = [
 <script>
   import gsap from "gsap";
   import { ScrollTrigger } from "gsap/ScrollTrigger";
-  import Lenis from "lenis";
   import SplitType from "split-type";
 
   // const lenis = new Lenis();
