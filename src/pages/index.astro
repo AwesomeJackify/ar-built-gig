@@ -197,7 +197,14 @@ const projects = [
                 >
                   {field.text}
                 </label>
-                {field.name === "phone" && (
+                {field.name === "message" ? (
+                  <textarea
+                    id={field.name}
+                    name={field.name}
+                    required
+                    class="bg-transparent form-input px-4 h-96 py-3 w-full rounded focus:outline-none font-extralight"
+                  />
+                ) : field.name === "phone" ? (
                   <input
                     autocomplete="on"
                     type="tel"
@@ -205,14 +212,6 @@ const projects = [
                     name={field.name}
                     required
                     class="bg-transparent form-input px-4 py-3 w-full rounded focus:outline-none font-extralight"
-                  />
-                )}
-                {field.name === "message" ? (
-                  <textarea
-                    id={field.name}
-                    name={field.name}
-                    required
-                    class="bg-transparent form-input px-4 h-96 py-3 w-full rounded focus:outline-none font-extralight"
                   />
                 ) : (
                   <input
